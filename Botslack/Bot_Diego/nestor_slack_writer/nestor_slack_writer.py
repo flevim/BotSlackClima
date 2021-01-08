@@ -6,7 +6,7 @@ from slack import WebClient
 
 time.sleep(30)
 
-CANAL_SLACK = "#chatbot"
+CANAL_SLACK = "#general"
 
 
 ##### CONNEXIÓN A SLACK ########

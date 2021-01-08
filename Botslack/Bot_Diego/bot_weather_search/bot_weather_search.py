@@ -35,6 +35,7 @@ queue_name = result.method.queue
 channel.queue_bind(exchange='ultiminio', queue=queue_name, routing_key="weather")
 
 def get_msg(ciudad):
+    print("SE EJECUTÓ GET_MSG")
     geolocator = Nominatim(user_agent="geolocation_places")
     api_key = os.environ['WEATHER_API_KEY']
     parser = argparse.ArgumentParser()
@@ -108,14 +109,6 @@ def get_msg(ciudad):
         msg = msg + msg1
     return msg[0:2000]
 
-query = "Valdivia"
-result = get_msg(str(query))
-print(query)
-print(result)
-
-        ########## PUBLICA EL RESULTADO COMO EVENTO EN RABBITMQ ##########
-channel.basic_publish(exchange='ultiminio', routing_key="publicar_slack", body=result)
-
 
 
 ##########################################################
@@ -128,8 +121,10 @@ print(' [*] Waiting for messages. To exit press CTRL+C')
 
 
 def callback(ch, method, properties, body):
+    print("hola se ejecutó el CALBACK")
     print(body)
-    if str(body).startswith("[clima]"):
+    if str(body).startswith("b'[clima]"):
+        print("Esto podría funcionar")
         query = str(body)[9:-1]
         result = get_msg(str(query))
         print(query)

@@ -19,7 +19,7 @@ connection = pika.BlockingConnection(
 channel = connection.channel()
 
 #Creamos el exchange 'nestor' de tipo 'fanout'
-channel.exchange_declare(exchange='nestor', exchange_type='topic', durable=True)
+channel.exchange_declare(exchange='ultiminio', exchange_type='topic', durable=True)
 
 
 ########### APLICACION WEB FLASK ############
@@ -52,8 +52,8 @@ def message(payload):
     # Get the text from the event that came through
     text = event.get("text")
 
-    if text.startswith("[wikipedia]"):
-        channel.basic_publish(exchange='nestor', routing_key="wikipedia", body=text)
+    if text.startswith("[clima]"):
+        channel.basic_publish(exchange='ultiminio', routing_key="weather", body=text)
 
 
 if __name__ == "__main__":
